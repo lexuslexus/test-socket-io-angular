@@ -1,7 +1,7 @@
 
 
 app.factory('socket', function($rootScope){
-	// var socket = io.connect('/');
+	var socket = io('http://localhost:3000');
 
 	return {
 		on : function(name, callback){

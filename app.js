@@ -1,34 +1,40 @@
-
 /**
  * Module dependencies.
  */
 
 var express = require('express'),
-	port = process.env.PORT || 3000;
+	app = express(),
+    port = process.env.PORT || 3000,
+    server = require('http').Server(app),
+    messageList = [];
 
 
-var app = express(),
-	messageList = [];
-
+server.listen(port);
 app.use(express.static(__dirname + '/static'));
 
-app.use(function (req, res) {
-	res.sendfile('./static/index.html');
+app.use(function(req, res) {
+    res.sendfile('./static/index.html');
 })
 
-var io = require('socket.io').listen(app.listen(port));
+var io = require('socket.io')(server);
 
-io.sockets.on('connection', function(socket){
-	socket.emit('connected');
+io.sockets.on('connection', function(socket) {
+	console.log('connected');
+    socket.emit('connected');
+
+    socket.on('getAllMessage', function() {
+        console.log('emit getAllMessage')
+        socket.emit('sendAllMessage', messageList);
+    })
+
+
+    socket.on('send', function(message) {
+        messageList.push(message);
+        socket.emit('sent', message);
+    })
+
 })
 
-io.sockets.on('send', function(message){
-	messageList.push(message);
-	socket.emit('sent', message);
-})
 
-io.sockets.on('getAllMessage', function(message){
-	socket.emit('sendAllMessage', messageList);
-})
 
 console.log('TechNode is on port ' + port + '!');
