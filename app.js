@@ -53,7 +53,7 @@ app.get('/post', function(req, res) {
 app.get('/login', function(req, res) {
     var dir = __dirname + '/static/index.html';
     res.sendfile(dir);
-});
+});  
 app.get('/registry', function(req, res) {
     var dir = __dirname + '/static/index.html';
     res.sendfile(dir);
