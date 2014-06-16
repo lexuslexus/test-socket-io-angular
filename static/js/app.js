@@ -1,32 +1,40 @@
 var app = angular.module('myApp', []);
 
-app.controller('indexCtrl', ['$scope', 'socket', function($scope, socket){
-	$scope.list = [];
+app.controller('indexCtrl', ['$scope', 'socket',
+	function($scope, socket) {
+		$scope.list = [];
 
-	// var socket = io.connect('/');
+		// var socket = io.connect('/');
 
-	// socket.on('connected', function(){
-	// 	console.log('connected');
-	// })
+		socket.on('connected', function() {
+			// 获取所有聊天记录
+			socket.emit('getAllMessage');
+			// 获取所有聊天记录回调
+			socket.on('gotAllMessage', function(data) {
+				$scope.list = data.list;
+			})
+			// 发送信息
+			$scope.send = function() {
+				var txt = $scope.txt;
+				if (txt) {
+					socket.emit('sendMessage', {
+						content: txt
+					})
+				} else {
+					return false;
+				}
+			}
+			// 发送信息回调
+			socket.on('sentMessage', function (message) {
+				$scope.list.push(message);
+			})
+		})
 
-	// socket.on('sent', function(data){
-	// 	$scope.list.push(data);
-	// })
+		// socket.on('sent', function(data){
+		// 	$scope.list.push(data);
+		// })
 
-	// socket.on('sendAllMessage', function(data){
-	// 	$scope.list = data;
-	// })
 
-	// socket.emit('getAllMessage', {}, function(){});
 
-	// $scope.send = function(){
-	// 	var txt = $scope.txt;
-	// 	if(txt) {
-	// 		socket.emit('send', {
-	// 			content : txt
-	// 		})
-	// 	} else {
-	// 		return false;
-	// 	}
-	// }
-}])
+	}
+])

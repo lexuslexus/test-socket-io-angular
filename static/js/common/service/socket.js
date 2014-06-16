@@ -1,7 +1,7 @@
 
 
 app.factory('socket', function($rootScope){
-	// var socket = io.connect('/');
+	var socket = io.connect('/');
 
 	return {
 		on : function(name, callback){
