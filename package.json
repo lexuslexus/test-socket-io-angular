@@ -10,7 +10,8 @@
     "ejs": "*",
     "mongodb": "^1.4.5",
     "connect-mongo": "0.4.1",
-    "connect-flash": "*"
+    "connect-flash": "*",
+    "mongoose": "^3.8.12"
   },
   "devDependencies": {
     "mongodb": "^1.4.5",

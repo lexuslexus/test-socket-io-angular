@@ -1,16 +1,17 @@
 var app = angular.module('myApp', ['ngRoute']);
 
 
-app.config(function($routeProvider, $locationProvider){
-    $locationProvider.html5Mode(true);
+app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider){
+    // $locationProvider.html5Mode(true);
     $routeProvider
     .when('/', {
         templateUrl : 'js/modules/index/index.tpl.html',
-        controller : 'js/modules/index/indexCtrl.js'
+        controller : 'IndexCtrl'
     })
     .when('/post', {
         templateUrl : 'js/modules/post/post.tpl.html',
-        controller : 'js/modules/post/postCtrl.js'
+        controllerUrl : 'js/modules/post/postCtrl.js',
+        controller : 'PostCtrl'
     })
     .when('/login', {
         templateUrl : 'js/modules/login/login.tpl.html',
@@ -24,4 +25,4 @@ app.config(function($routeProvider, $locationProvider){
         templateUrl : 'js/modules/404/404.tpl.html',
         controller : 'js/modules/404/404Ctrl.js'
     })
-})
+}])

@@ -1,6 +1,6 @@
 
 
-app.controller('postCtrl', ['$scope', 'socket',
+app.controller('PostCtrl', ['$scope', 'socket',
 	function($scope, socket) {
 		
 
