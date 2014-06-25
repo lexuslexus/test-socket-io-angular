@@ -1,17 +1,33 @@
-var express = require('express');
-var app = express();
-var server = require('http').Server(app);
-var io = require('socket.io')(server);
-var messageList = [];
+var express = require('express'),
+    routes = require('./server/route'),
+    app = express(),
+    server = require('http').Server(app),
+    io = require('socket.io')(server),
+    settings = require('./server/settings'),
+    flash = require('connect-flash'),
+    messageList = [],
+    MongoStore = require('connect-mongo')(express)
+    port = 3000;
 
-server.listen(3000);
-
+server.listen(port);
+app.set('port', port);
 app.use(express.static(__dirname + '/static'));
+app.use(flash());
+app.use(express.favicon());
+app.use(express.logger('dev'));
+app.use(express.bodyParser());
+app.use(express.methodOverride());
+app.use(express.cookieParser());
+app.use(express.session({
+    secret : settings.cookieSecret,
+    key : settings.db,
+    cookie : {maxAge:1000*60*60*24*30},
+    store : new MongoStore({
+        db:settings.db
+    })
+}))
 
-app.get('/' || '/index', function(req, res) {
-	var dir = __dirname + '/static/index.html';
-	res.sendfile(dir);
-});
+
 
 
 io.on('connection', function(socket) {
