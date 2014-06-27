@@ -46,5 +46,5 @@ io.on('connection', function(socket) {
 	})
 });
 
-
+routes(app);
 // console.log('TechNode is on port ' + port + '!');

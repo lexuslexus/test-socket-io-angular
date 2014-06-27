@@ -54,8 +54,9 @@ module.exports = function (app) {
 		});
 		User.get(newUser.name, function (err, user) {
 			if(user){
-				req.flash('error', '用户已存在！');
-				return res.redirect('/reg');
+				// req.flash('error', '用户已存在！');
+				// return res.redirect('/reg');
+				res.end()
 			}
 			newUser.save(function (err, user) {
 				if(err){
@@ -67,6 +68,13 @@ module.exports = function (app) {
 				res.redirect('/');
 			})
 		})
+	})
+
+	app.get('/test', function(req, res){
+		// res.render('test', {
+		// 	title : 'test'
+		// })
+		res.end('{a:1}');
 	})
 
 

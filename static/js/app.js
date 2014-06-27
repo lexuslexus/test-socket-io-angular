@@ -19,7 +19,7 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
     })
     .when('/registry', {
         templateUrl : 'js/modules/registry/registry.tpl.html',
-        controller : 'js/modules/registry/registryCtrl.js'
+        controller : 'RegistryCtrl'
     })
     .otherwise('/404', {
         templateUrl : 'js/modules/404/404.tpl.html',
